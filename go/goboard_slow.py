@@ -139,7 +139,7 @@ class  Board():
         adjacent_same_color = []
         adjacent_opposite_color = []
         liberties = []
-        for neighbour in point.neighbours():
+        for neighbour in point.neighbors():
             if not self.is_on_grid(neighbour):
                 continue
             neighbour_string = self._grid.get(neighbour)
@@ -164,7 +164,7 @@ class  Board():
 
     def _remove_string(self, string):
         for point in string.stones:
-            for neighbour in point.neighbours():
+            for neighbour in point.neighbors():
                 neighbour_string = self._grid.get(neighbour)
                 if neighbour_string is None:
                     continue

@@ -2,10 +2,10 @@ from six.moves import input
 
 from go import goboard_f as goboard
 from go import gotypes
-from go.minimax import pruned
+from go.monte import monte
 from go.utils import print_board, print_move, point_from_coords
 
-BOARD_SIZE = 5
+BOARD_SIZE = 9
 
 
 def capture_diff(game_state):
@@ -27,7 +27,7 @@ def capture_diff(game_state):
 
 def main():
     game = goboard.GameState.new_game(BOARD_SIZE)
-    bot = pruned.DepthPrunedAgent(4, capture_diff)
+    bot = monte.MCTSAgent(1000, 1.5)
 
     while not game.is_over():
         print_board(game.board)

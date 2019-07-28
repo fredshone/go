@@ -4,7 +4,7 @@ from go.gotypes import Point
 def is_point_an_eye(board, point, color):
     if board.get(point) is not None:
         return False
-    for neighbour in point.neighbours():
+    for neighbour in point.neighbors():
         if board.is_on_grid(neighbour):
             neighbour_color = board.get(neighbour)
             if neighbour_color != color:

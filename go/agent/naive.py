@@ -11,7 +11,7 @@ class RandomBot(Agent):
         candidates = []
         for r in range(1, game_state.board.num_rows + 1):
             for c in range(1, game_state.board.num_cols + 1):
-                candidate = Point(row = r, col = c)
+                candidate = Point(row=r, col=c)
                 if game_state.is_valid_move(Move.play(candidate)) and \
                 not is_point_an_eye(game_state.board,
                         candidate,
