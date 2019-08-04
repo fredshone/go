@@ -1,5 +1,6 @@
 import numpy as np
 from go import gotypes
+from go import goboard_f as goboard
 
 
 COLS = 'ABCDEFGHJKLMNOPQRST'
@@ -31,8 +32,29 @@ def print_board(board):
     print('    ' + '  '.join(COLS[:board.num_cols]))
 
 
+def get_valid_human_move(game):
+    while True:
+        human_move = input('-- ')
+        move = parse_human_move(game, human_move)
+        if move and game.is_valid_move(move):
+            break
+    return move
+
+
+def parse_human_move(game, human_move):
+    assert isinstance(human_move, str)
+    human_move = human_move.strip()
+    if human_move.lower() == 'pass':
+        return goboard.Move.pass_turn()
+    if human_move.lower() == 'resign':
+        return goboard.Move.resign()
+    point = point_from_coords(human_move)
+    if game.board.is_on_grid(point):
+        return goboard.Move.play(point)
+
+
 def point_from_coords(coords):
-    col = COLS.index(coords[0]) + 1
+    col = COLS.lower().index(coords[0].lower()) + 1
     row = int(coords[1:])
     return gotypes.Point(row, col)
 
@@ -44,7 +66,7 @@ def coords_from_point(point):
         )
 
 
-class MoveAge():
+class MoveAge:
     def __init__(self, board):
         self.move_ages = - np.ones((board.num_rows, board.num_cols))
 

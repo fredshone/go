@@ -4,6 +4,8 @@ import random
 from go import agent
 from go.gotypes import Player
 from go.utils import coords_from_point
+from go.goboard_f import Move
+
 
 __all__ = [
     'MCTSAgent',
@@ -120,6 +122,11 @@ class MCTSAgent(agent.Agent):
                 best_pct = child_pct
                 best_move = child.move
         print('Select move %s with win pct %.3f' % (best_move, best_pct))
+
+        if best_pct < 0.2:
+            print(f"best move score of {best_pct} is less than .2, resigning")
+            return Move.resign()
+
         return best_move
 
     def select_child(self, node):

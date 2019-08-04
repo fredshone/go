@@ -91,7 +91,7 @@ class GoString():
         return GoString(self.color, self.stones, copy.deepcopy(self.liberties))
 
 
-class Board():
+class Board:
     def __init__(self, num_rows, num_cols):
         self.num_rows = num_rows
         self.num_cols = num_cols
@@ -107,7 +107,6 @@ class Board():
         self.neighbor_table = neighbor_tables[dim]
         self.corner_table = corner_tables[dim]
         self.move_ages = MoveAge(self)
-
 
     def neighbors(self, point):
         return self.neighbor_table[point]
@@ -147,10 +146,6 @@ class Board():
         # Add filled point hash code.
         self._hash ^= zobrist.HASH_CODE[point, player]
 
-        # 2. Reduce liberties of any adjacent strings of the opposite
-        #    color.
-        # 3. If any opposite color strings now have zero liberties,
-        #    remove them.
         for other_color_string in adjacent_opposite_color:
             replacement = other_color_string.without_liberty(point)
             if replacement.num_liberties:
@@ -253,7 +248,7 @@ class Board():
 # end::return_zobrist[]
 
 
-class Move():
+class Move:
     """Any action a player can play on a turn.
     Exactly one of is_play, is_pass, is_resign will be set.
     """
@@ -303,7 +298,7 @@ class Move():
             other.point)
 
 
-class GameState():
+class GameState:
     def __init__(self, board, next_player, previous, move):
         self.board = board
         self.next_player = next_player
@@ -339,7 +334,7 @@ class GameState():
 
     @property
     def situation(self):
-        return (self.next_player, self.board)
+        return self.next_player, self.board
 
     def does_move_violate_ko(self, player, move):
         if not move.is_play:
